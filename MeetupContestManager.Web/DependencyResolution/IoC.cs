@@ -11,7 +11,7 @@ namespace MeetupContestManager.Web {
                                         scan.WithDefaultConventions();
                                     });
 
-                            const string ravenConnectionStringName = "RAVENHQ_CONNECTION_STRING";
+                            const string ravenConnectionStringName = "RavenDB";
 
                             x
                                 .For<IMeetingRepository>()
