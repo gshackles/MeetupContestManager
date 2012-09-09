@@ -1,0 +1,19 @@
+﻿@using MeetupContestManager.Web.Models.Home
+@model IList<Meeting>
+@{
+    ViewBag.Title = "NYC Mobile .NET Developers Group";
+}
+
+<h2>Meetings</h2>
+
+<p>
+    Choose a meeting below to enter a giveaway
+</p>
+
+<ul data-role="listview" data-inset="true">
+    @foreach (var meeting in Model) {
+        <li>
+            @Html.ActionLink(meeting.Date.ToShortDateString() + ": " + meeting.Name, "Enter", "Home", new { id = meeting.Id }, null)
+        </li>
+    }
+</ul>

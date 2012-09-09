@@ -1,0 +1,27 @@
+﻿@using MeetupContestManager.Web.Models.Home
+@model EnterViewModel
+
+@{
+    ViewBag.Title = "Enter Giveaway";
+}
+
+<h2>@Model.MeetingTitle</h2>
+
+<p>
+    Enter your information below to enter this meeting's giveaway
+</p>
+
+@Html.ValidationSummary()
+
+@using (Html.BeginForm()) {
+    @Html.HiddenFor(model => model.MeetingTitle)
+    @Html.HiddenFor(model => model.MeetingId)
+    
+    @Html.LabelFor(model => model.Name)
+    @Html.TextBoxFor(model => model.Name)
+
+    @Html.LabelFor(model => model.Email)
+    @Html.TextBoxFor(model => model.Email)
+
+    <input type="submit" value="Enter" />
+}
