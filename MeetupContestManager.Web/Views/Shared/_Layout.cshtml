@@ -18,6 +18,16 @@
                         Home
                     </a> 
                     
+                    if (Request.IsAuthenticated) {
+                         <a href="@Url.Action("LogOut", "Account")" class="ui-btn-right" data-icon="delete">
+                            Log Out
+                        </a>
+                    } else {
+                        <a href="@Url.Action("Login", "Account")" class="ui-btn-right" data-icon="gear">
+                            Log In
+                        </a>
+                    }
+                    
                     <h1>@ViewBag.Title</h1>
                 }
             </div>

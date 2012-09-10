@@ -7,5 +7,6 @@ namespace MeetupContestManager.Core.Entities
         public string Name { get; set; }
         public string EmailAddress { get; set; }
         public DateTime TimeEntered { get; set; }
+        public bool Selected { get; set; }
     }
 }

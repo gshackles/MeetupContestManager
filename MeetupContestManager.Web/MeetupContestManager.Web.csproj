@@ -139,6 +139,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
@@ -146,6 +148,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Account\LoginViewModel.cs" />
+    <Compile Include="Models\Admin\Meeting.cs" />
+    <Compile Include="Models\Admin\SelectWinnersViewModel.cs" />
+    <Compile Include="Models\Admin\Winner.cs" />
     <Compile Include="Models\Home\EnterViewModel.cs" />
     <Compile Include="Models\Home\Entry.cs" />
     <Compile Include="Models\Home\Meeting.cs" />
@@ -269,6 +275,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Thanks.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\SelectWinners.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

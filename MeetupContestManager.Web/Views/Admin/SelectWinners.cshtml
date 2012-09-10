@@ -1,0 +1,47 @@
+﻿@using MeetupContestManager.Web.Models.Admin
+@model SelectWinnersViewModel
+
+@{
+    ViewBag.Title = "Select Winners";
+}
+
+<h2>@Model.MeetingTitle</h2>
+
+<fieldset>
+    <a href="#" id="SelectNewWinner" data-role="button">
+        Select New Winner
+    </a>
+</fieldset>
+
+<p id="WinnerContainer">
+    <h3 id="WinnerName"></h3>
+</p>
+
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            var $winnerName = $("#WinnerName");
+            
+            $("#SelectNewWinner").click(function (e) {
+                e.preventDefault();
+
+                $.getJSON("@Url.Action("SelectNewWinner", new { id = Model.MeetingId })", function(winner) {
+                    function setWinner(text) {
+                        $winnerName
+                            .fadeOut(function() {
+                                $winnerName
+                                    .text(text)
+                                    .fadeIn();
+                            });
+                    }
+
+                    if (!winner) {
+                        setWinner("There are no more entries left to pick!");
+                    } else {
+                        setWinner(winner.Name);
+                    }
+                });
+            });
+        });
+    </script>
+}

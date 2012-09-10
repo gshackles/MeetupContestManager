@@ -1,0 +1,19 @@
+﻿@model IList<MeetupContestManager.Web.Models.Admin.Meeting>
+
+@{
+    ViewBag.Title = "Meetings";
+}
+
+<h2>Pick Winners</h2>
+
+<p>
+    Choose a meeting below to pick giveaway winners
+</p>
+
+<ul data-role="listview" data-inset="true">
+    @foreach (var meeting in Model) {
+        <li>
+            @Html.ActionLink(meeting.Date.ToShortDateString() + ": " + meeting.Name, "SelectWinners", "Admin", new { id = meeting.Id }, null)
+        </li>
+    }
+</ul>

@@ -57,8 +57,10 @@
   <ItemGroup>
     <Compile Include="DataAccess\MeetingRepository.cs" />
     <Compile Include="DataAccess\RepositoryBase.cs" />
+    <Compile Include="DataAccess\UserRepository.cs" />
     <Compile Include="Entities\Entry.cs" />
     <Compile Include="Entities\Meeting.cs" />
+    <Compile Include="Entities\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

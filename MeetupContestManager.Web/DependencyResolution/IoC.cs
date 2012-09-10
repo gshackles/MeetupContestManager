@@ -1,8 +1,12 @@
 using MeetupContestManager.Core.DataAccess;
 using StructureMap;
-namespace MeetupContestManager.Web {
-    public static class IoC {
-        public static IContainer Initialize() {
+
+namespace MeetupContestManager.Web
+{
+    public static class IoC
+    {
+        public static IContainer Initialize()
+        {
             ObjectFactory.Initialize(x =>
                         {
                             x.Scan(scan =>
@@ -17,7 +21,13 @@ namespace MeetupContestManager.Web {
                                 .For<IMeetingRepository>()
                                 .Use<MeetingRepository>()
                                 .Ctor<string>("connectionStringName").Is(ravenConnectionStringName);
+
+                            x
+                                .For<IUserRepository>()
+                                .Use<UserRepository>()
+                                .Ctor<string>("connectionStringName").Is(ravenConnectionStringName);
                         });
+
             return ObjectFactory.Container;
         }
     }

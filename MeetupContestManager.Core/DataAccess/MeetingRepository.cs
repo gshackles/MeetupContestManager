@@ -11,6 +11,7 @@ namespace MeetupContestManager.Core.DataAccess
         Meeting GetById(string id);
         bool AddEntry(string meetingId, string name, string email);
         IList<Meeting> ListMeetings();
+        Entry SelectNewWinner(string meetingId);
     }
 
     public class MeetingRepository : RepositoryBase, IMeetingRepository
@@ -80,6 +81,27 @@ namespace MeetupContestManager.Core.DataAccess
                     .OrderByDescending(meeting => meeting.Date)
                     .ToList();
             }
-        } 
+        }
+
+        public Entry SelectNewWinner(string meetingId)
+        {
+            var meeting = GetById(meetingId);
+            var unselectedEntries = meeting.Entries.Where(entry => !entry.Selected);
+
+            if (unselectedEntries.Count() == 0)
+                return null;
+
+            var winner = unselectedEntries.OrderBy(entry => Guid.NewGuid()).First();
+
+            using (var session = GetSession())
+            {
+                winner.Selected = true;
+
+                session.Store(meeting);
+                session.SaveChanges();
+            }
+
+            return winner;
+        }
     }
 }

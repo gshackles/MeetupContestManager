@@ -8,6 +8,9 @@ namespace MeetupContestManager.Web
         {
             Mapper.CreateMap<Core.Entities.Meeting, Models.Home.Meeting>();
             Mapper.CreateMap<Core.Entities.Entry, Models.Home.Entry>();
+
+            Mapper.CreateMap<Core.Entities.Meeting, Models.Admin.Meeting>();
+            Mapper.CreateMap<Core.Entities.Entry, Models.Admin.Winner>();
         }
     }
 }
