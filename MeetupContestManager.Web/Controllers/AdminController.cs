@@ -49,5 +49,12 @@ namespace MeetupContestManager.Web.Controllers
 
             return Json(winnerViewModel, JsonRequestBehavior.AllowGet);
         }
+
+        public EmptyResult ResetContest(string id)
+        {
+            _meetingRepository.ResetContest(id);
+
+            return new EmptyResult();
+        }
     }
 }

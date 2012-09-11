@@ -5,42 +5,110 @@
     ViewBag.Title = "Select Winners";
 }
 
+@section head {
+    <style type="text/css">
+        #CopyEmail { display: none; }
+        #WinnerName { display: block; font-size: 3em; margin: 2em; }
+        #WinnerContainer { text-align: center; }
+    </style>
+}
+
 <h2>@Model.MeetingTitle</h2>
 
 <fieldset>
-    <a href="#" id="SelectNewWinner" data-role="button">
+    <a href="#" id="ResetContest" data-role="button" data-icon="delete">
+        Reset Contest
+    </a>
+
+    <a href="#" id="SelectNewWinner" data-role="button" data-icon="forward" data-theme="b">
         Select New Winner
     </a>
 </fieldset>
 
-<p id="WinnerContainer">
-    <h3 id="WinnerName"></h3>
-</p>
+<div id="WinnerContainer">
+    <span id="WinnerName"></span>
+
+    <a href="#" id="CopyEmail">(Copy Email)</a>
+</div>
 
 @section scripts {
     <script type="text/javascript">
         $(function () {
-            var $winnerName = $("#WinnerName");
+            var $winnerName = $("#WinnerName"),
+                $copyEmail = $("#CopyEmail"),
+                currentWinnerEmail;
+            
+            function setWinner(text) {
+                $winnerName
+                    .fadeOut(function() {
+                        $winnerName
+                            .text(text)
+                            .fadeIn();
+                    });
+            }
             
             $("#SelectNewWinner").click(function (e) {
                 e.preventDefault();
 
                 $.getJSON("@Url.Action("SelectNewWinner", new { id = Model.MeetingId })", function(winner) {
-                    function setWinner(text) {
-                        $winnerName
-                            .fadeOut(function() {
-                                $winnerName
-                                    .text(text)
-                                    .fadeIn();
-                            });
-                    }
-
                     if (!winner) {
                         setWinner("There are no more entries left to pick!");
+
+                        $copyEmail.hide();
                     } else {
                         setWinner(winner.Name);
+
+                        $copyEmail.show();
+                        
+                        currentWinnerEmail = winner.EmailAddress;
                     }
                 });
+            });
+
+            $("#CopyEmail").click(function(e) {
+                e.preventDefault();
+                
+                if (currentWinnerEmail) {
+                    prompt("Winner's email address:", currentWinnerEmail);
+                }
+            });
+
+            $("#ResetContest").click(function(e) {
+                e.preventDefault();
+                
+                var $dialog = 
+                    $("div").simpledialog2({
+                        mode: "button",
+                        headerText: "Are you sure?",
+                        headerClose: true,
+                        buttonPrompt: "Are you sure you want to reset the contest?",
+                        buttons: {
+                            "Yes": {
+                                click: function () {
+                                    $dialog.simpledialog2("close");
+                                    
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "@Url.Action("ResetContest", new { id = Model.MeetingId })",
+                                        success: function () {
+                                            setWinner("The entries in this contest have been reset");
+                                        },
+                                        error: function () {
+                                            setWinner("There was a problem resetting this contest, please try again");
+                                        }
+                                    });
+                                },
+                                icon: "check"
+                            },
+                            "No": {
+                                click: function () {
+                                    $dialog.simpledialog2("close");
+                                },
+                                icon: "delete",
+                                theme: "c"
+                            }
+                        }
+                    });
             });
         });
     </script>
